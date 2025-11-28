@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: draw-guess-server
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    networks:
+      - draw-guess-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: draw-guess-client
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - server
+    networks:
+      - draw-guess-network
+
+networks:
+  draw-guess-network:
+    driver: bridge

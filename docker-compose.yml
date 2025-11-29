@@ -1,27 +1,16 @@
 version: '3.8'
 
 services:
-  server:
+  draw-guess-game:
     build:
-      context: ./server
+      context: .
       dockerfile: Dockerfile
-    container_name: draw-guess-server
+    container_name: draw-guess-game
     ports:
       - "3001:3001"
     restart: unless-stopped
-    networks:
-      - draw-guess-network
-
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: draw-guess-client
-    ports:
-      - "80:80"
-    restart: unless-stopped
-    depends_on:
-      - server
+    environment:
+      - NODE_ENV=production
     networks:
       - draw-guess-network
 

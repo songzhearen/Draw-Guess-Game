@@ -3,10 +3,19 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const gameManager = require('./game');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// 提供前端静态资源
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// 处理单页应用路由
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 const server = http.createServer(app);
 const io = new Server(server, {

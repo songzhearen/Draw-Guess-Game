@@ -5,7 +5,8 @@ import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 
 // Initialize socket outside component to prevent multiple connections
-const socket = io('http://localhost:3001');
+// 使用相对路径连接到后端，自动适配当前域名
+const socket = io();
 
 function App() {
   return (
